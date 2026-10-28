@@ -1,0 +1,18 @@
+UPDATING Contract Desk
+
+The only user-facing executable is Contract Desk.exe in the existing app folder.
+Build the package with build-desk.ps1, then install it with update-contract-desk.ps1:
+
+  -Package <the new built executable>
+  -AppFolder <the existing installed Contract Desk folder>
+  -SourceFolder <the matching ContractDesk source folder>
+
+The updater waits for the main app and any known older launcher to close.
+If they remain open, it stops and keeps the installed executable intact.
+It never falls back to a differently named executable. Once closed, the
+new executable atomically replaces Contract Desk.exe. Old executables and
+sources are backed up inside backups/. Older alternate launchers are moved
+to that backup after replacement. The tracking database is not replaced.
+
+Do not reuse historical one-off installers in build/update-map-*.ps1 that
+created alternate launchers. Use this updater for every future release.
